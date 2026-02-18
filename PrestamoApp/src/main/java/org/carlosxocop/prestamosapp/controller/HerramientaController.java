@@ -32,5 +32,19 @@ public class HerramientaController {
         return h;
     }
 
+    @PutMapping("/{id}")
+    public Herramienta actualizar(@PathVariable String id , @RequestBody Herramienta h){
+        Herramienta herramienta = repo.findById(id).orElse(null);
+        herramienta.setNombreHerramienta(h.getNombreHerramienta());
+        herramienta.setDescripcionHerramienta(h.getDescripcionHerramienta());
+        herramienta.setDisponibilidad(h.isDisponibilidad());
+        herramienta.setEstado(h.getEstado());
 
+        return repo.save(herramienta);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable String id){
+        repo.deleteById(id);
+    }
 }
