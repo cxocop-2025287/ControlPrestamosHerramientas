@@ -42,14 +42,12 @@ public class PrestamoController {
         return ResponseEntity.ok(prestamo);
     }
 
+    @PostMapping
+    public Prestamo crearPrestamo(@RequestBody Prestamo prestamo) {
+        return prestamoRepo.save(prestamo);
+    }
 
 
-
-
-
-
-
-    // Eliminar/Cancelar préstamo
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarPrestamo(@PathVariable Long id) {
         try {
@@ -73,33 +71,30 @@ public class PrestamoController {
     }
 
     // Listar préstamos por herramienta
-    @GetMapping("/herramienta/{idHerramienta}")
-    public List<Prestamo> listarPorHerramienta(@PathVariable String idHerramienta) {
-        // Necesitarás agregar este método en tu PrestamoRepository
-        return prestamoRepo.findByHerramientaId_herramienta(idHerramienta);
+    @GetMapping("/herramienta/{herramienta}")
+    public List<Prestamo> listarPorHerramienta(@PathVariable String herramienta) {
+        return prestamoRepo.findByHerramienta(herramienta);
     }
 
-    // Buscar préstamos por nombre de prestatario
+
+
     @GetMapping("/buscar")
     public List<Prestamo> buscarPorNombre(@RequestParam String nombre) {
-        // Necesitarás agregar este método en tu PrestamoRepository
+
         return prestamoRepo.findByNombrePrestatarioContainingIgnoreCase(nombre);
     }
 
-    // Listar préstamos activos (los que aún no han pasado su fecha de devolución)
+
     @GetMapping("/activos")
     public List<Prestamo> listarActivos() {
-        // Necesitarás agregar este método en tu PrestamoRepository
         return prestamoRepo.findByFechaDevolucionGreaterThanEqual(LocalDate.now());
     }
 
-    // Listar préstamos vencidos
     @GetMapping("/vencidos")
     public List<Prestamo> listarVencidos() {
         return prestamoRepo.findByFechaDevolucionLessThan(LocalDate.now());
     }
 
-    // Obtener estadísticas básicas
     @GetMapping("/estadisticas")
     public Map<String, Object> obtenerEstadisticas() {
         List<Prestamo> todos = prestamoRepo.findAll();

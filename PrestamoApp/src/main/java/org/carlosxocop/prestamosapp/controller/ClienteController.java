@@ -25,4 +25,26 @@ public class ClienteController {
         Cliente c = repo.findById(dpi).orElse(null);
         return c;
     }
+
+    @PutMapping("/{dpi}")
+    public Cliente actualizar(@PathVariable String dpi, @RequestBody Cliente c) {
+
+        Cliente cliente = repo.findById(dpi).orElse(null);
+
+        cliente.setNombreClientes(c.getNombreClientes());
+        cliente.setApellidoClientes(c.getApellidoClientes());
+        cliente.setEmailClientes(c.getEmailClientes());
+        cliente.setTelefonoClientes(c.getTelefonoClientes());
+        cliente.setDireccionClientes(c.getDireccionClientes());
+        cliente.setEstadoClientes(c.getEstadoClientes());
+        cliente.setEstado(c.getEstado());
+
+        return repo.save(cliente);
+    }
+
+    @DeleteMapping("/{dpi}")
+    public void eliminar(@PathVariable String dpi) {
+        repo.deleteById(dpi);
+    }
+
 }

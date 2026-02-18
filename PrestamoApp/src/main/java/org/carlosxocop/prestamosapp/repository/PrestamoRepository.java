@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
 
-    List<Prestamo> findByHerramientaId_herramienta(String idHerramienta);
+    List<Prestamo> findByHerramienta(String herramienta);
+
 
 
     List<Prestamo> findByNombrePrestatarioContainingIgnoreCase(String nombre);
